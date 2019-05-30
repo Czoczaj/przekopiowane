@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Canvas</title>
+</head>
+
+<body>
+  <canvas id="draw" width="400" height="600"></canvas>
+  <script>
+    var canvas = document.querySelector('#draw');
+    var czoczaj = document.querySelector('body');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    var ctx = canvas.getContext('2d');
+    console.log(ctx);
+    ctx.strokeStyle = 'red';
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+    var isDrawning = 0;
+    var lastX = 0;
+    var lastY = 0;
+    var color = 0;
+    ctx.lineWidth = 1;
+    function nieprawdaxd(e){
+      
+      if(!isDrawning){
+        return;
+        
+      }
+      
+
+      ctx.beginPath();
+      ctx.strokeStyle = `hsl(${color},100%,50%)`;
+      color = color >= 360? 1 : color + 1; 
+      ctx.moveTo(lastX,lastY);
+      var koza = 1;
+
+      if(ctx.lineWidth< 40 && koza){
+      ctx.lineWidth +=2.5;
+      }else{ctx.lineWidth -= 0.9 + 0.1; if(ctx.lineWidth>=2){koza = 0;}else{koza = 1;}}
+      ctx.lineTo(e.offsetX,e.offsetY);
+      ctx.stroke();
+      lastX = e.offsetX;
+      lastY = e.offsetY;
+    }
+
+
+
+    canvas.addEventListener('mousedown',(e) => {
+      isDrawning = true;
+      lastX = e.offsetX;
+      lastY = e.offsetY;})
+    canvas.addEventListener('mouseup',() => {isDrawning = false;})
+    canvas.addEventListener('mousemove',nieprawdaxd);
+    canvas.addEventListener('mouseout',() => {isDrawning=0;})
+  </script>
+
+  <style>
+    html,
+    body {
+      margin: 0;
+    }
+  </style>
+
+</body>
+
+</html>
